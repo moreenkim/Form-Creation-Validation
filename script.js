@@ -2,13 +2,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('registration-form');
     const feedbackDiv = document.getElementById('form-feedback')
 
-    const isValid = true;
-
-    const messages = ["this is an error", "try again"];
-
+    
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
+
+        const isValid = true;
+
+    const messages = [];
+
 
         const usernameInputField = document.getElementById('username');
         const emailInputField = document.getElementById('email');
@@ -21,14 +23,17 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             errorMessage.textContent = '';
             form.submit();
-        }
-        if (usernameInputField.value.length < 3) {
+        };
+
+        if (username.length < 3) {
             isValid = false;
-            usernameError.textContent = 'Username must be at least 3 characters long.';
-            return;
-          } else {
-            usernameError.textContent = '';
-          }
+            messages.push('Username must be at least 3 characters long.');
+        };
+
+        if (!email.includes('@') || !email.includes('.')) {
+            isValid = false;
+            messages.push('Email must include both "@" and "." characters.');
+        };
 
         if (emailInputField.value.trim() === '') {
             errorMessage.textContent = 'This field is required.';
