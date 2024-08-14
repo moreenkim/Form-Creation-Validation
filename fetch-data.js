@@ -4,13 +4,29 @@ async function fetchUserData() {
   const dataContainer = document.getElementById("api-data");
 
   try {
+    dataContainer.innerHTML = "";
+
     const response = await fetch(apiUrl);
 
     const users = await response.json();
-    console.log('User Data:', users);
+    console.log("User Data:", users);
 
+    const userList = document.createElement("ul");
+
+    users.forEach((user) => {
+      const listItem = document.createElement("li");
+
+      listItem.textContent = user.name;
+
+      userList.appendChild(listItem);
+    });
+
+    dataContainer.appendChild(userList);
   } catch (error) {
-    console.error('There has been a problem with your fetch operation:', error);
-
+    dataContainer.innerHTML = "Failed to load user data";
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchUserData();
+});
